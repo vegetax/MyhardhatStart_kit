@@ -5,9 +5,9 @@ pragma solidity ^0.8.9;
 import "hardhat/console.sol";
 
 contract Lock {
-    uint x = 10;
+  uint256 x = 10;
 
-    function test() public {
-        console.log(x);
-    }
+  function test() public {
+    console.log(x);
+  }
 }
