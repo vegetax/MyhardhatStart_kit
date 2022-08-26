@@ -13,14 +13,14 @@ require("solidity-coverage")
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY || ""
 const RINKEBY_RPC_URL = process.env.RINKEBY_RPC_URL
 const PRIVATE_KEY =process.env.PRIVATE_KEY
-const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || ""
+const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY
 
 module.exports = {
   defaultNetwork: "hardhat",
   networks: {
     hardhat: {},
     rinkeby: {
-      url: RINKEBY_RPC_URL,
+      url: RINKEBY_RPC_URL, 
       accounts: [PRIVATE_KEY],
       chainId: 4,
     },
