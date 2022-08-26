@@ -19,7 +19,7 @@ async function main() {
   console.log(x);
   const tx = await lock.setValue(222);
   const y = await lock.test();
-  console.log(y);
+  console.log(y.toString());
 }
 
 // async function verify(contractAddress, args) {

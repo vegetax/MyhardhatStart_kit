@@ -9,10 +9,10 @@ contract Lock {
 
   function test() public view returns (uint256) {
     // console.log(x);
-  return x;
+    return x;
   }
 
-  function setValue(uint256 _x) public  returns(uint256){
+  function setValue(uint256 _x) public returns (uint256) {
     x = _x;
     return x;
   }
