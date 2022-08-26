@@ -14,6 +14,7 @@ const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY || "";
 const RINKEBY_RPC_URL = process.env.RINKEBY_RPC_URL;
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
+const KOVAN_RPC_URL = process.env.KOVAN_RPC_URL;
 
 module.exports = {
   defaultNetwork: "hardhat",
@@ -30,6 +31,11 @@ module.exports = {
     localhost: {
       url: "http://localhost:8545",
       chainId: 31337,
+    },
+    kovan: {
+      url: KOVAN_RPC_URL,
+      accounts: [PRIVATE_KEY],
+      chainId: 42,
     },
   },
   solidity: "0.8.14",
