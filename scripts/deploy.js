@@ -15,6 +15,11 @@ async function main() {
     await verify(lock.address, []);
   }
   //get the contract data
+  const x = await lock.test();
+  console.log(x);
+  const tx = await lock.setValue(222);
+  const y = await lock.test();
+  console.log(y);
 }
 
 // async function verify(contractAddress, args) {
