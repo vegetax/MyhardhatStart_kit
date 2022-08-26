@@ -7,7 +7,7 @@ require("solidity-coverage");
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 /**
- * @type import('hardhat/config').HardhatUserConfig
+ * @type import('hardhat/config').HardhatUserConfig.
  */
 
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY || "";
