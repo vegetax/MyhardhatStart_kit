@@ -7,6 +7,8 @@
 yarn add
 ```
 ## Feature List
+- deploy
+- task
 
 
 
@@ -16,3 +18,4 @@ yarn add
   - 删除语句，则打开PnP功能
 - yarn hardhat console --network rinkeby  可以直接在console里与rinkeby交互
   - await ethers.provider.getBlockNumber() 直接查看rinkeby的链上信息
+- yarn hardhat deploy --tags lock    部署有tag的deploy
