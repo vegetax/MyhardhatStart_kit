@@ -8,7 +8,12 @@ yarn add
 ```
 ## Feature List
 - deploy
+  - 通过 --tags 控制deploy代码
 - task
+- verify
+  - 如果不是在本地环境 自动verity
+- 自动迁移合约和abi 
+
 
 
 
@@ -19,3 +24,4 @@ yarn add
 - yarn hardhat console --network rinkeby  可以直接在console里与rinkeby交互
   - await ethers.provider.getBlockNumber() 直接查看rinkeby的链上信息
 - yarn hardhat deploy --tags lock    部署有tag的deploy
+
