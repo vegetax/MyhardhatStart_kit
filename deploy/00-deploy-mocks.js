@@ -4,6 +4,9 @@ const DECIMALS = "8"
 const INITIAL_PRICE = "200000000000" // 2000
 //{ getNamedAccounts, deployments } 来自 hre
 module.exports = async ({ getNamedAccounts, deployments }) => {
+    // 不mock的话就直接返回
+    return
+
     const { deploy, log } = deployments
     const { deployer } = await getNamedAccounts() // 来自hardhat config
     const chainId = network.config.chainId
@@ -27,4 +30,4 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         log("------------------------------------------------")
     }
 }
-module.exports.tags = ["all", "mocks"]
+module.exports.tags = ["mocks"]

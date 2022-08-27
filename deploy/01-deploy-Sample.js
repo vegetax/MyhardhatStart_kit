@@ -20,21 +20,22 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     log("Deploying FundMe and waiting for confirmations...") 
     */
 
-    const Lock = await deploy("Lock", {
+    const contract = await deploy("Sample", {
         from: deployer,
         args: [12],
         log: true,
         // we need to wait if on a live network so we can verify properly
         waitConfirmations: network.config.blockConfirmations || 1,
     })
-    log(`Lock deployed at ${Lock.address}`)
+    log(`Sample deployed at ${contract.address}`)
 
+    // verity合约
     if (
         !developmentChains.includes(network.name) &&
         process.env.ETHERSCAN_API_KEY
     ) {
-        await verify(Lock.address, [ethUsdPriceFeedAddress])
+        await verify(contract.address, [12])
     }
 }
 
-module.exports.tags = ["all", "lock"]
+module.exports.tags = ["all", "Sample"]
