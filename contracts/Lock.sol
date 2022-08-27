@@ -5,15 +5,19 @@ pragma solidity ^0.8.14;
 import "hardhat/console.sol";
 
 contract Lock {
-  uint256 x = 10;
+    uint256 x = 10;
 
-  function test() public view returns (uint256) {
-    // console.log(x);
-  return x;
-  }
+    constructor(uint256 _a) {
+        x = _a;
+    }
 
-  function setValue(uint256 _x) public  returns(uint256){
-    x = _x;
-    return x;
-  }
+    function test() public view returns (uint256) {
+        // console.log(x);
+        return x;
+    }
+
+    function setValue(uint256 _x) public returns (uint256) {
+        x = _x;
+        return x;
+    }
 }
