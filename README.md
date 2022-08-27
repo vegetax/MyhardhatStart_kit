@@ -13,6 +13,8 @@ yarn add
 - verify
   - 如果不是在本地环境 自动verity
 - 自动迁移合约和abi 
+  - <img width="547" alt="image" src="https://user-images.githubusercontent.com/38912494/187022227-4ee3a0a8-9a69-4b72-aafb-070a14484127.png">
+  - 在.env中设置 UPDATE_FRONT_END=TRUE
 
 
 
