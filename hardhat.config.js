@@ -39,7 +39,7 @@ module.exports = {
             accounts: [PRIVATE_KEY],
             chainId: 42,
         },
-        kovan: {
+        mumbai: {
             url: MUMBAI_RPC_URL,
             accounts: [PRIVATE_KEY],
             chainId: 80001,
