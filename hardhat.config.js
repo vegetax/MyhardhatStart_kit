@@ -19,7 +19,7 @@ const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY
 const KOVAN_RPC_URL = process.env.KOVAN_RPC_URL
 
 module.exports = {
-    defaultNetwork: "hardhat",
+    defaultNetwork: "ganache",
     networks: {
         hardhat: {},
         ganache: {
