@@ -22,7 +22,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 
     const contract = await deploy("Sample", {
         from: deployer,
-        args: [12],
+        args: [10, 50],
         log: true,
         // we need to wait if on a live network so we can verify properly
         waitConfirmations: network.config.blockConfirmations || 1,
@@ -34,7 +34,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         !developmentChains.includes(network.name) &&
         process.env.ETHERSCAN_API_KEY
     ) {
-        await verify(contract.address, [12])
+        await verify(contract.address, [10, 50])
     }
 }
 

@@ -1,5 +1,7 @@
-//部署后拷贝地址过来与合约在链上交互
-//以及ethers.js 对event的操作
+// 部署后拷贝地址过来与合约在链上交互
+// 以及ethers.js 对event的操作
+// 通过.queryFilter 拉取过去的EVENT
+// 通过.on监听EVENT
 
 //imports
 const { ethers, run, network } = require("hardhat")
@@ -9,7 +11,7 @@ async function main() {
     const Sample = await ethers.getContractFactory("Sample")
     // console.log(Sample)
     const sample = new ethers.Contract(
-        "0x305242f6D16A2E4b8d3A4a0236F09e30A945a96e",
+        "0xfa31F63a43E4764E892269d1a161eE836Ff7b6D7",
         Sample.interface,
         Sample.signer
     )
@@ -25,12 +27,21 @@ async function main() {
     console.log(receipt.events[0].args.b.toString()) */
 
     /*** 拉取Event  */
-    const filterDate = sample.filters.LogEvent(56, null) //筛选event里的数据
+    // const filterDate = sample.filters.LogEvent(10, null) //筛选event里的数据
+    // const pastEvent = await sample.queryFilter(filterDate) // 拉取符合过滤器条件的EVENT
 
-    const pastEvent = await sample.queryFilter(filterDate) // 拉取全部EVENT
     // const pastEvent = await sample.queryFilter("*") // 拉取全部EVENT
     // const pastEvent = await sample.queryFilter("LogEvent") // 拉名字为LogEvent的EVENT
-    console.log(pastEvent)
+    // console.log(pastEvent)
+
+    /*** 监听 ”LogEvent“ 事件 */
+    sample.on("LogEvent", (x, y, event) => {
+        console.log(`x is ${x} y is ${y}`)
+    })
+
+    await new Promise((resolve) => setTimeout(() => resolve(), 2000))
+
+    const Tx = await sample.xPlus1() //触发事件
 }
 
 //main

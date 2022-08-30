@@ -5,27 +5,34 @@ pragma solidity ^0.8.14;
 import "hardhat/console.sol";
 
 contract Sample {
+    uint256 x;
+    uint256 y;
 
-    event LogEvent(uint256 indexed b  , uint256 a);
-    uint256 x = 10;
+    event LogEvent(uint256 indexed x, uint256 y);
 
-    constructor(uint256 _a) {
-        x = _a;
+    constructor(uint256 _x, uint256 _y) {
+        x = _x;
+        y = _y;
     }
 
-    function test() public  returns (uint256) {
-        // console.log(x);
-        emit LogEvent(x,99);
+    function xPlus1() public returns (uint256) {
         x++;
-        return x; 
+        emit LogEvent(x, y);
+        return x;
     }
 
-    function setValue(uint256 _x) public returns (uint256) {
+    function yPlus1() public returns (uint256) {
+        y++;
+        emit LogEvent(x, y);
+        return x;
+    }
+
+    function setX(uint256 _x) public returns (uint256) {
         x = _x;
         return x;
     }
 
-    function getX () view public returns(uint256){
+    function getX() public view returns (uint256) {
         return x;
     }
 }
