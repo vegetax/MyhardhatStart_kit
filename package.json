@@ -22,5 +22,9 @@
     "lint:fix": "solhint 'contracts/**/*.sol' --fix",
     "format": "prettier --write .",
     "coverage": "hardhat coverage"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.7.3",
+    "@superfluid-finance/ethereum-contracts": "^1.4.0"
   }
 }

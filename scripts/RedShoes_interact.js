@@ -1,7 +1,6 @@
 const { ethers } = require("hardhat")
 const abi = require("../constants/redshoes_abi.json")
 
-//async main
 async function main() {
     // 建立provider
     const provider = new ethers.providers.JsonRpcProvider(
