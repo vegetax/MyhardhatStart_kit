@@ -26,15 +26,12 @@ contract RedShoes is ERC721Enumerable, Ownable {
     using CFAv1Library for CFAv1Library.InitData;
     CFAv1Library.InitData public cfaV1;
 
-    constructor(
-        // string memory _initBaseURI,
-        address _core
-    )
+    constructor(string memory _initBaseURI, address _core)
         // ISuperfluid host
         ERC721("RedShoes", "RS")
     {
         core = CoreCoupon(_core);
-        // setBaseURI(_initBaseURI);
+        setBaseURI(_initBaseURI);
         // cfaV1 = CFAv1Library.InitData(
         //     host,
         //     IConstantFlowAgreementV1(
