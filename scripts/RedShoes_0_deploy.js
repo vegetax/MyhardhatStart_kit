@@ -13,7 +13,14 @@ async function main() {
     await coreCoupon.deployed()
     console.log(`Deployed CoreCoupon to: ${coreCoupon.address}`)
     console.log("Deploying RedShoes...")
-    const redShoes = await RedShoes.deploy(coreCoupon.address)
+    let mainName = "redshoes_main_80001_1717"
+    let attributesName = "redshoes_attributes_80001_1718"
+    const redShoes = await RedShoes.deploy(
+        coreCoupon.address,
+        `https://testnet.tableland.network/query?mode=list&s=`,
+        mainName,
+        attributesName
+    )
     await redShoes.deployed()
     console.log(`Deployed RedShoes to: ${redShoes.address}`)
     console.log("Contract deployed success!")

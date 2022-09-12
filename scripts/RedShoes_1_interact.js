@@ -3,8 +3,8 @@
 //imports
 const { ethers, run, network } = require("hardhat")
 
-let CoreCouponAdd = "0x60f2C177d08C33b28e1F300575bdE40DA87F19bc"
-let RedShoesAdd = "0xffBb42eb5fD40F5626275c2C9b1F246949b8419F"
+let CoreCouponAdd = "0xBfe35D4691A45d568C3239618a487B964692b6a7"
+let RedShoesAdd = "0x358D46Ccf58d654bbe2d16D0eDC4B34b79B15bCB"
 
 async function interact() {
     const accounts = await ethers.getSigners() //获得ganache上的地址

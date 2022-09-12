@@ -4,6 +4,7 @@ pragma solidity >=0.8.0 <0.9.0;
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./CoreCoupon.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 import {ISuperfluid, ISuperToken, ISuperApp} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 import {ISuperfluidToken} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol";
@@ -14,7 +15,11 @@ import {IConstantFlowAgreementV1} from "@superfluid-finance/ethereum-contracts/c
 contract RedShoes is ERC721Enumerable, Ownable {
     using Strings for uint256;
 
-    string baseURI;
+    //TableLand fields
+    string public mainTable;
+    string public attributesTable;
+    string public baseURIString;
+
     string public baseExtension = ".json";
     uint256 public cost = 0;
     uint256 public maxSupply = 10000;
@@ -22,16 +27,24 @@ contract RedShoes is ERC721Enumerable, Ownable {
     bool public paused = false;
     bool public canRedeem = true;
     CoreCoupon core;
+
     //sf
     using CFAv1Library for CFAv1Library.InitData;
     CFAv1Library.InitData public cfaV1;
 
-    constructor(string memory _initBaseURI, address _core)
+    constructor(
+        address _core,
+        string memory _initBaseURI,
+        string memory _mainTable,
+        string memory _attributesTable
+    )
         // ISuperfluid host
         ERC721("RedShoes", "RS")
     {
         core = CoreCoupon(_core);
         setBaseURI(_initBaseURI);
+        mainTable = _mainTable;
+        attributesTable = _attributesTable;
         // cfaV1 = CFAv1Library.InitData(
         //     host,
         //     IConstantFlowAgreementV1(
@@ -100,6 +113,10 @@ contract RedShoes is ERC721Enumerable, Ownable {
         }
     }
 
+    /**
+     *  @dev Must override the default implementation, which simply appends a `tokenId` to _baseURI.
+     *  tokenId - The id of the NFT token that is being requested
+     */
     function tokenURI(uint256 tokenId)
         public
         view
@@ -111,23 +128,64 @@ contract RedShoes is ERC721Enumerable, Ownable {
             _exists(tokenId),
             "ERC721Metadata: URI query for nonexistent token"
         );
+        string memory baseURI = _baseURI();
 
-        string memory currentBaseURI = _baseURI();
+        if (bytes(baseURI).length == 0) {
+            return "";
+        }
+
+        /**
+         *   A SQL query to JOIN two tables to compose the metadata accross a 'main' and 'attributes' table
+         *
+         *   SELECT json_object(
+         *       'id', id,
+         *       'name', name,
+         *       'description', description,
+         *       'image', image,
+         *       'attributes', json_group_array(
+         *           json_object(
+         *               'trait_type',trait_type,
+         *               'value', value
+         *           )
+         *       )
+         *   )
+         *   FROM {mainTable} JOIN {attributesTable}
+         *       ON {mainTable}.id = {attributesTable}.main_id
+         *   WHERE id = <main_id>
+         *   GROUP BY id
+         */
+        string memory query = string(
+            abi.encodePacked(
+                "SELECT%20json_object%28%27id%27%2Cid%2C%27name%27%2Cname%2C%27description%27%2Cdescription%2C%27image%27%2Cimage%2C%27attributes%27%2Cjson_group_array%28json_object%28%27trait_type%27%2Ctrait_type%2C%27value%27%2Cvalue%29%29%29%20FROM%20",
+                mainTable,
+                "%20JOIN%20",
+                attributesTable,
+                "%20ON%20",
+                mainTable,
+                "%2Eid%20%3D%20",
+                attributesTable,
+                "%2Emain_id%20WHERE%20id%3D"
+            )
+        );
+        // Return the baseURI with a query string, which looks up the token id in a row.
+        // `&mode=list` formats into the proper JSON object expected by metadata standards.
         return
-            bytes(currentBaseURI).length > 0
-                ? string(
-                    abi.encodePacked(
-                        currentBaseURI,
-                        tokenId.toString(),
-                        baseExtension
-                    )
+            string(
+                abi.encodePacked(
+                    baseURI,
+                    query,
+                    Strings.toString(tokenId),
+                    "%20group%20by%20id"
                 )
-                : "";
+            );
     }
 
-    // internal
-    function _baseURI() internal view virtual override returns (string memory) {
-        return baseURI;
+    /**
+     *
+     *  @dev Tableland's _baseURI, Must override the default implementation, which returns an empty string.
+     */
+    function _baseURI() internal view override returns (string memory) {
+        return baseURIString;
     }
 
     //设置价格
@@ -137,7 +195,7 @@ contract RedShoes is ERC721Enumerable, Ownable {
 
     //设置BaseURI
     function setBaseURI(string memory _newBaseURI) public onlyOwner {
-        baseURI = _newBaseURI;
+        baseURIString = _newBaseURI;
     }
 
     function setBaseExtension(string memory _newBaseExtension)
