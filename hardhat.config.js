@@ -43,6 +43,8 @@ module.exports = {
             url: MUMBAI_RPC_URL,
             accounts: [PRIVATE_KEY],
             chainId: 80001,
+            gas: 2100000,
+            gasPrice: 8000000000,
         },
     },
     solidity: {

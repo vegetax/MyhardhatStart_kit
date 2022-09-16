@@ -3,13 +3,15 @@
 //imports
 const { ethers, run, network } = require("hardhat")
 
-let CoreCouponAdd = "0xBfe35D4691A45d568C3239618a487B964692b6a7"
-let RedShoesAdd = "0x358D46Ccf58d654bbe2d16D0eDC4B34b79B15bCB"
+let CoreCouponAdd = "0xbc9B4b1EE06E7938550096FB89437daF95612FfA"
+let RedShoesAdd = "0xF67FF2e5A73f17241445530af836BDc8214CA933"
+let GameCoinxRouterAdd = "0xDC09Af9a449F4c4821Efd222737A4A7BfE8539fC"
 
 async function interact() {
     const accounts = await ethers.getSigners() //获得ganache上的地址
-    const CoreCoupon = await ethers.getContractFactory("CoreCoupon")
+    const CoreCoupon = await ethers.getContractFactory("CoreCoupon_V2")
     const RedShoes = await ethers.getContractFactory("RedShoes")
+    const GameCoinxRouter = await ethers.getContractFactory("GameCoinxRouter")
 
     const coreCoupon = new ethers.Contract(
         CoreCouponAdd,
@@ -21,32 +23,29 @@ async function interact() {
         RedShoes.interface,
         accounts[0]
     )
+    const gameCoinxRouter = new ethers.Contract(
+        GameCoinxRouterAdd,
+        GameCoinxRouter.interface,
+        accounts[0]
+    )
 
     /* mint */
-    // let hash1 = ethers.utils.keccak256(
-    //     ethers.utils.toUtf8Bytes("happyBirthday1!")
-    // )
-    // let hash2 = ethers.utils.keccak256(
-    //     ethers.utils.toUtf8Bytes("happyBirthday2!")
-    // )
-    // let hash3 = ethers.utils.keccak256(
-    //     ethers.utils.toUtf8Bytes("happyBirthday3!")
-    // )
-    // await redShoes.mint(1, true, hash1)
-    // await redShoes.mint(1, true, hash2)
-    // await redShoes.mint(1, true, hash3)
+    // const mintTX = await redShoes.mint(1, 0)
+    // const mintReceipt = await mintTX.wait().catch((err) => {
+    //     console.log(err)
+    // })
+    // console.log("mint success!")
 
-    /* 查询总量 */
+    /* 查询mint总量 */
     // const mintNum = await redShoes.totalSupply()
     // console.log("NFT total mint:" + mintNum.toString())
 
-    /* 提取 */
-    // const tx1 = await coreCoupon.UnstakeWithCoupon(2, "happyBirthday111!")
-    // const receipt1 = await tx1.wait()
-    // console.log(receipt1)
-
     /* Unstake */
-    // const TXunstaek = await coreCoupon.UnstakeWithCoupon(4, "happyBirthday1!")
+    // const unstakeTX = await coreCoupon.UnStake([1, 2])
+    // const unstakeReceipt = await unstakeTX.wait().catch((err) => {
+    //     console.log(err)
+    // })
+    // console.log("unstake success!")
 
     /* 查询质押数 */
     // const stakeNum = await coreCoupon.totalShoesStaked()
@@ -57,18 +56,22 @@ async function interact() {
     // console.log(`ownerOf is ${ownerOf}`)
 
     /* Stake */
-    // let hash = ethers.utils.keccak256(ethers.utils.toUtf8Bytes("666"))
-    // const TXStake = await coreCoupon.StakeShoesInGame(
-    //     "0x334Fb66c19bfc58d4596e97752F530E613330C8e",
-    //     6,
-    //     hash
-    // )
+    // const TXStake = await coreCoupon.StakeShoesInGame(accounts[0].address, 1)
+    // const stakeReceipt = await TXStake.wait().catch((err) => {
+    //     console.log(err)
+    // })
+    // console.log("stake success!")
 
     /* redeem */
-    const TXRedeem = await coreCoupon.RedeemShoes(
-        [4, 5, 6],
-        ["444", "555", "666"]
-    )
+    // const redeemTX = await redShoes.MilesRedeem(2)
+    // const redeemReceipt = await redeemTX.wait().catch((err) => {
+    //     console.log(err)
+    // })
+    // console.log("redeem success!")
+
+    /* getRedeemState  */
+    // const state = await redShoes.getRedeemState(2)
+    // console.log(`redeem state is ${state}`)
 }
 
 //
